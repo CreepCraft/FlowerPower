@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 public class SpawnFlowers
 	{
 
-		private void spawnFlowers(Player player, int radius, World world, Location loc) {
-			
+		static void spawnFlowers(Player player, int radius, World world, Location loc) {
+
 			Block b;
 			int blocks = 0;
 			double x1 = Math.round(loc.getX() - radius), y1 = Math.round(loc.getY() - radius), z1 = Math.round(loc.getZ() - radius), x2 = Math.round(loc.getX() + radius), y2 = Math.round(loc.getY() + radius), z2 = Math.round(loc.getZ() + radius);
