@@ -2,6 +2,7 @@ package troll.coding.FlowerPower;
 
 import java.util.List;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.CreatureType;
@@ -12,7 +13,7 @@ import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 
 public class EListener extends EntityListener{
-	@SuppressWarnings("unused")
+	
 	private FlowerPower plugin;
 	
 	public EListener(FlowerPower plugin) {
@@ -36,71 +37,154 @@ public class EListener extends EntityListener{
 		World world = ExplosionCause.getWorld();
 		
 		Entity p = null;
-		int up = 0;
 		
-		List<Entity> entt = ExplosionCause.getNearbyEntities(5, 5, 5);
-		
+		List<Entity> entt = ExplosionCause.getNearbyEntities(10, 10, 10);
 		
 		
-		while (y < 25){
+		
+		while (y < 30){ //Checks nearby entities, saves them into a list and loops through 25 entities (should be enough) /Pencil
 		
 			p = entt.get(y);
 			
 			if (p instanceof Player){
 				
-				y = 26;
+				y = 31;
 			}else{
 				
 				y++;
 			}
-		}
+		} //end Entity check code
 		
 		
-		
-		if (event.isCancelled() == true){
-			
-			return;
-			
-		}else{
-		
+		final Entity pl = p;
 		
 		if (ExplosionCause instanceof Creeper){
 			
-		return;
+			if (event.isCancelled() == true){
+				
+				return;
+				
+			}else{ 
+				
+				return;}
 			
 		}else{
 			
 			event.setCancelled(true); 
 			
-			Entity squid = world.spawnCreature(loc, CreatureType.SQUID);
+			final Entity squid = world.spawnCreature(loc, CreatureType.SQUID);
 			
+			p.getWorld().playEffect(loc, Effect.SMOKE, 31, 30);
 			
 			p.setPassenger(squid);
-			SpawnFlowers.spawnFlowers((Player) event.getEntity(), 10, p.getWorld(), p.getLocation());
+			SpawnFlowers.spawnFlowers(1, ExplosionCause.getWorld(), loc);
 			
-			Location locc = p.getLocation();
-			
-			
-			
-			for (up = 0; up > 10; up++) {
-				
-			locc.setY(y+2);
-			}
+			final Location locc = p.getLocation();
 			
 			
+			pl.teleport(locc.add(0, 1, 0));
+			p.getWorld().playEffect(loc, Effect.SMOKE, 31, 30);
 			
+			plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() { //ugly but working (at least for me?) delayed squid pulling the player up. Also implemented the smoke effect, not quite satisfied yet tho :/ 
+
+			    public void run() {
+
+			    	pl.teleport(locc.add(0, 2, 0));
+					pl.getWorld().playEffect(locc.add(0, 2, 0), Effect.SMOKE, 31, 30);
+			    	
+			    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+					    public void run() {
+
+					    	pl.teleport(locc.add(0, 3, 0));
+							pl.getWorld().playEffect(locc.add(0, 3, 0), Effect.SMOKE, 31, 30);
+					    	
+					    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+							    public void run() {
+
+							    	pl.teleport(locc.add(0, 4, 0));
+									pl.getWorld().playEffect(locc.add(0, 4, 0), Effect.SMOKE, 31, 30);
+							    	
+							    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+									    public void run() {
+
+									    	pl.teleport(locc.add(0, 5, 0));
+											pl.getWorld().playEffect(locc.add(0, 5, 0), Effect.SMOKE, 31, 30);
+											
+									    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+											    public void run() {
+
+											    	pl.teleport(locc.add(0, 6, 0));
+													pl.getWorld().playEffect(locc.add(0, 6, 0), Effect.SMOKE, 31, 30);
+											    	
+											    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+													    public void run() {
+
+													    	pl.teleport(locc.add(0, 7, 0));
+															pl.getWorld().playEffect(locc.add(0, 7, 0), Effect.SMOKE, 31, 30);
+													    	
+													    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+															    public void run() {
+
+															    	pl.teleport(locc.add(0, 8, 0));
+																	pl.getWorld().playEffect(locc.add(0, 8, 0), Effect.SMOKE, 31, 30);
+																	
+															    	plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+
+																	    public void run() {
+
+																	    	squid.remove(); //removes the squid and finishes the delayed task :)
+																	    	
+																	    	
+																	    }
+																	}, 5L);
+															    }
+															}, 5L);
+															
+													    }
+													}, 5L);
+													
+											    }
+											}, 5L);
+											
+									    }
+									}, 5L);
+									
+							    }
+							}, 5L);
+							
+					    }
+					}, 5L);
+					
+			    	
+			    	
+			    }
+			}, 2L);
+			
+		
+			
+	}
+			
+			
+			
+								
 			
 			
 			
 			
 			
 		}
+			
+		
+}
 		
 		
-		}
 		
-		
-	}
-	}
+	
 	
 

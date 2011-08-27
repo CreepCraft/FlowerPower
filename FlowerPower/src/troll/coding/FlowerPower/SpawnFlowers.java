@@ -3,14 +3,14 @@ package troll.coding.FlowerPower;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-
 public class SpawnFlowers
 	{
 
-		static void spawnFlowers(Player player, int radius, World world, Location loc) {
+		static void spawnFlowers(int radius, World world, Location loc) {
 
+			@SuppressWarnings("unused")
 			Block b;
+			@SuppressWarnings("unused")
 			int blocks = 0;
 			double x1 = Math.round(loc.getX() - radius), y1 = Math.round(loc.getY() - radius), z1 = Math.round(loc.getZ() - radius), x2 = Math.round(loc.getX() + radius), y2 = Math.round(loc.getY() + radius), z2 = Math.round(loc.getZ() + radius);
 
@@ -19,7 +19,7 @@ public class SpawnFlowers
 					for (int z = 0; (z1 + z) <= z2; z++) {
 
 						if (world.getBlockTypeIdAt(new Location(world, x1 + x, y1 + y, z1 + z)) == 2 && world.getBlockTypeIdAt(new Location(world, x1 + x, (y1 + y) + 1, z1 + z)) == 0) {
-							world.getBlockAt(new Location(world, x1 + x, (y1 + y) + 1, z1 + z)).setTypeId(28);
+							world.getBlockAt(new Location(world, x1 + x, (y1 + y) + 1, z1 + z)).setTypeId(38);
 							blocks++;
 						}
 					}
